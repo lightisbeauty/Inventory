@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Software Inventory</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{font-family:-apple-system,sans-serif;background:#000;color:#fff;font-size:14px;padding:2rem;max-width:960px;margin:0 auto;min-height:100vh}
+.page-header{margin-bottom:2rem}
+.page-header h1{font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.01em;margin-bottom:4px}
+.page-header .meta{font-family:monospace;font-size:12px;color:#888}
+.page-header .meta span{color:#41b6e6}
+details{background:#2a2a2a;border:0.5px solid #444;border-radius:8px;margin-bottom:10px;overflow:hidden}
+summary{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;user-select:none;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'\25B8';color:#41b6e6;font-size:11px;transition:transform .15s;flex-shrink:0}
+details[open] summary::before{transform:rotate(90deg)}
+.section-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#41b6e6;flex:1}
+.section-count{font-family:monospace;font-size:11px;color:#888;background:#1a1a1a;border:0.5px solid #333;border-radius:99px;padding:2px 8px}
+.section-body{padding:0 16px 14px;border-top:0.5px solid #333}
+ul{list-style:none;padding:0;margin-top:10px}
+li{font-family:monospace;font-size:13px;color:#fff;padding:5px 0;border-bottom:0.5px solid #333;display:flex;align-items:baseline;gap:8px;word-break:break-all}
+li:last-child{border-bottom:none}
+li::before{content:'\2014';color:#444;flex-shrink:0}
+.ver{font-size:11px;color:#41b6e6;background:#0d1f28;border:0.5px solid #1a3a4a;border-radius:4px;padding:1px 6px;margin-left:auto;flex-shrink:0}
+.plist-file{font-size:11px;color:#555;margin-left:4px}
+.empty{font-family:monospace;font-size:12px;color:#555;padding:8px 0;margin-top:8px}
+.tip{margin-top:10px;background:#0d1a0d;border:0.5px solid #1a3a1a;border-radius:6px;padding:8px 12px;font-family:monospace;font-size:12px;color:#4a9a4a}
+.footer{margin-top:2.5rem;font-size:10px;color:#555;font-family:monospace;text-align:center}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <h1>Software Inventory</h1>
+  <div class="meta">Host: <span>Light’s MacBook Pro</span> &nbsp;&middot;&nbsp; Generated: <span>2026-06-23 20:58</span></div>
+</div>
+<details open>
+  <summary>
+    <span class="section-title">/Applications</span>
+    <span class="section-count">72</span>
+  </summary>
+  <div class="section-body">
+    <ul>
+<li>.Karabiner-VirtualHIDDevice-Manager<span class="ver">6.8.0</span></li>
+<li>AdBlock<span class="ver">4.0.1</span></li>
+<li>ApolloOne<span class="ver">4.5.1</span></li>
+<li>BBEdit<span class="ver">16.0</span></li>
+<li>Blackmagic Disk Speed Test<span class="ver">3.4.2</span></li>
+<li>Blackmagic Proxy Generator Lite<span class="ver">21.0.0</span></li>
+<li>bronControl</li>
+<li>calibrite PROFILER<span class="ver">2.0.0</span></li>
+<li>Canva<span class="ver">1.122.1</span></li>
+<li>CapCut<span class="ver">8.6.0</span></li>
+<li>Capture One<span class="ver">16.5.8.4</span></li>
+<li>Capture One 16.6.5.17<span class="ver">16.6.5.17</span></li>
+<li>Capture One 16.7.5.7<span class="ver">16.7.5.7</span></li>
+<li>Capture One 16.8.0.32<span class="ver">16.8.0.32</span></li>
+<li>Capturebot 2<span class="ver">2026.2.4</span></li>
+<li>ChatGPT<span class="ver">1.2026.153</span></li>
+<li>Claude<span class="ver">1.15200.0</span></li>
+<li>Discord<span class="ver">0.0.394</span></li>
+<li>FileZilla<span class="ver">3.69.6</span></li>
+<li>FileZilla Server<span class="ver">1.12.6</span></li>
+<li>Firefox<span class="ver">151.0.3</span></li>
+<li>Frame.io Transfer<span class="ver">1.11.0</span></li>
+<li>FreeFileSync<span class="ver">14.9</span></li>
+<li>GarageBand<span class="ver">10.4.14</span></li>
+<li>Godox_IAP<span class="ver">1.0</span></li>
+<li>GoodSync<span class="ver">12.8.9.9</span></li>
+<li>Google Chrome<span class="ver">149.0.7827.156</span></li>
+<li>Google Docs<span class="ver">127.0</span></li>
+<li>Google Drive<span class="ver">127.0</span></li>
+<li>Google Sheets<span class="ver">127.0</span></li>
+<li>Google Slides<span class="ver">127.0</span></li>
+<li>Guidelines<span class="ver">2026.1.0</span></li>
+<li>Hammerspoon<span class="ver">1.1.1</span></li>
+<li>HandBrake<span class="ver">1.11.1</span></li>
+<li>Hidden Bar<span class="ver">1.8</span></li>
+<li>Hush<span class="ver">1.0.18</span></li>
+<li>iMovie<span class="ver">10.4.4</span></li>
+<li>JPEGmini Pro<span class="ver">4.5.0</span></li>
+<li>Karabiner-Elements<span class="ver">15.9.0</span></li>
+<li>Karabiner-EventViewer<span class="ver">15.9.0</span></li>
+<li>KeyCastr<span class="ver">0.10.5</span></li>
+<li>Keynote<span class="ver">14.5</span></li>
+<li>Lunar<span class="ver">6.10.4</span></li>
+<li>LUTCalc<span class="ver">4.09</span></li>
+<li>MASV<span class="ver">2.11.5</span></li>
+<li>MenuBarUSB<span class="ver">3.2</span></li>
+<li>Mirror<span class="ver">0.4.0</span></li>
+<li>NetSpot<span class="ver">4.0.4462</span></li>
+<li>Numbers<span class="ver">14.5</span></li>
+<li>Pages<span class="ver">14.5</span></li>
+<li>Phocus<span class="ver">3.8.4</span></li>
+<li>Profoto Control<span class="ver">1.3.4</span></li>
+<li>PureRef</li>
+<li>Raw Convertor<span class="ver">6.0.6</span></li>
+<li>RawDigger<span class="ver">1.4.9</span></li>
+<li>Raycast<span class="ver">1.104.20</span></li>
+<li>RealTimeSync<span class="ver">14.9</span></li>
+<li>RustDesk<span class="ver">1.4.1</span></li>
+<li>ScreeningRoom<span class="ver">2024.1.8</span></li>
+<li>set.a.light 3D v2.5<span class="ver">2.5.97</span></li>
+<li>ShotPutPro<span class="ver">2024.3.5</span></li>
+<li>StradaAgent<span class="ver">2025.4.4-7</span></li>
+<li>Tab Space<span class="ver">3.14</span></li>
+<li>Tailscale<span class="ver">1.98.5</span></li>
+<li>Topaz Gigapixel<span class="ver">1.1.3</span></li>
+<li>Topaz Photo AI<span class="ver">3.6.2</span></li>
+<li>uBlock Origin Lite<span class="ver">2026.516.1652</span></li>
+<li>Visual Studio Code<span class="ver">1.123.0</span></li>
+<li>VLC<span class="ver">3.0.23</span></li>
+<li>WhatsApp<span class="ver">26.20.72</span></li>
+<li>Xcode<span class="ver">26.3</span></li>
+<li>zoom.us<span class="ver">6.7.7 (76486)</span></li>
+</ul>
+
+  </div>
+</details>
+<details >
+  <summary>
+    <span class="section-title">~/Applications</span>
+    <span class="section-count">1</span>
+  </summary>
+  <div class="section-body">
+    <ul>
+<li>Claude Code URL Handler</li>
+</ul>
+
+  </div>
+</details>
+<details >
+  <summary>
+    <span class="section-title">Homebrew Casks</span>
+    <span class="section-count">3</span>
+  </summary>
+  <div class="section-body">
+    <ul>
+<li>hammerspoon</li>
+<li>keycastr</li>
+<li>menubarusb</li>
+</ul>
+
+  </div>
+</details>
+<details >
+  <summary>
+    <span class="section-title">Homebrew Formulae (CLI)</span>
+    <span class="section-count">81</span>
+  </summary>
+  <div class="section-body">
+    <ul>
+<li>abseil<span class="ver">20260107.1</span></li>
+<li>ada-url<span class="ver">3.4.4</span></li>
+<li>aom<span class="ver">3.14.1</span></li>
+<li>brotli<span class="ver">1.2.0</span></li>
+<li>btop<span class="ver">1.4.0</span></li>
+<li>c-ares<span class="ver">1.34.6</span></li>
+<li>ca-certificates<span class="ver">2026-05-14</span></li>
+<li>cairo<span class="ver">1.18.4</span></li>
+<li>create-dmg<span class="ver">1.2.3</span></li>
+<li>exiftool<span class="ver">13.55</span></li>
+<li>fmt<span class="ver">12.1.0</span></li>
+<li>fontconfig<span class="ver">2.18.1</span></li>
+<li>freetype<span class="ver">2.14.3</span></li>
+<li>fribidi<span class="ver">1.0.16</span></li>
+<li>gdk-pixbuf<span class="ver">2.44.6</span></li>
+<li>gettext<span class="ver">1.0</span></li>
+<li>gh<span class="ver">2.93.0</span></li>
+<li>giflib<span class="ver">6.1.3</span></li>
+<li>glib<span class="ver">2.88.1</span></li>
+<li>graphite2<span class="ver">1.3.15</span></li>
+<li>harfbuzz<span class="ver">14.2.1</span></li>
+<li>hdrhistogram_c<span class="ver">0.11.9</span></li>
+<li>icu4c@78<span class="ver">78.3</span></li>
+<li>imagemagick<span class="ver">7.1.2-25</span></li>
+<li>jpeg-turbo<span class="ver">3.1.4.1</span></li>
+<li>libdatrie<span class="ver">0.2.14</span></li>
+<li>libde265<span class="ver">1.1.1</span></li>
+<li>libevent<span class="ver">2.1.12_1</span></li>
+<li>libheif<span class="ver">1.23.0</span></li>
+<li>liblinear<span class="ver">2.50</span></li>
+<li>libnghttp2<span class="ver">1.69.0</span></li>
+<li>libnghttp3<span class="ver">1.15.0</span></li>
+<li>libngtcp2<span class="ver">1.22.1</span></li>
+<li>libpng<span class="ver">1.6.58</span></li>
+<li>librsvg<span class="ver">2.62.3</span></li>
+<li>libssh2<span class="ver">1.11.1_1</span></li>
+<li>libthai<span class="ver">0.1.30</span></li>
+<li>libtiff<span class="ver">4.7.1_1</span></li>
+<li>libtool<span class="ver">2.5.4</span></li>
+<li>libunistring<span class="ver">1.4.2</span></li>
+<li>libuv<span class="ver">1.52.1</span></li>
+<li>libvmaf<span class="ver">3.1.0</span></li>
+<li>libx11<span class="ver">1.8.13</span></li>
+<li>libxau<span class="ver">1.0.12</span></li>
+<li>libxcb<span class="ver">1.17.0</span></li>
+<li>libxdmcp<span class="ver">1.1.5</span></li>
+<li>libxext<span class="ver">1.3.7</span></li>
+<li>libxrender<span class="ver">0.9.12</span></li>
+<li>little-cms2<span class="ver">2.19</span></li>
+<li>llhttp<span class="ver">9.4.1</span></li>
+<li>lua<span class="ver">5.5.0</span></li>
+<li>lz4<span class="ver">1.10.0</span></li>
+<li>lzo<span class="ver">2.10</span></li>
+<li>m4<span class="ver">1.4.21</span></li>
+<li>macmon<span class="ver">0.6.1</span></li>
+<li>mas<span class="ver">7.0.0</span></li>
+<li>merve<span class="ver">1.2.2_1</span></li>
+<li>mosh<span class="ver">1.4.0_40</span></li>
+<li>mpdecimal<span class="ver">4.0.1</span></li>
+<li>nbytes<span class="ver">0.1.4</span></li>
+<li>ncurses<span class="ver">6.6</span></li>
+<li>nmap<span class="ver">7.99</span></li>
+<li>node<span class="ver">26.0.0</span></li>
+<li>openssl@3<span class="ver">3.6.2</span></li>
+<li>pango<span class="ver">1.57.1</span></li>
+<li>pcre2<span class="ver">10.47_1</span></li>
+<li>pixman<span class="ver">0.46.4</span></li>
+<li>protobuf<span class="ver">35.1</span></li>
+<li>python@3.14<span class="ver">3.14.5</span></li>
+<li>readline<span class="ver">8.3.3</span></li>
+<li>simdjson<span class="ver">4.6.4</span></li>
+<li>simdutf<span class="ver">9.0.0</span></li>
+<li>sqlite<span class="ver">3.53.1</span></li>
+<li>tmux<span class="ver">3.6b</span></li>
+<li>utf8proc<span class="ver">2.11.3</span></li>
+<li>uvwasi<span class="ver">0.0.23</span></li>
+<li>webp<span class="ver">1.6.0</span></li>
+<li>x265<span class="ver">4.2</span></li>
+<li>xorgproto<span class="ver">2025.1</span></li>
+<li>xz<span class="ver">5.8.3</span></li>
+<li>zstd<span class="ver">1.5.7_1</span></li>
+</ul>
+
+  </div>
+</details>
+<details >
+  <summary>
+    <span class="section-title">Mac App Store</span>
+    <span class="section-count">22</span>
+  </summary>
+  <div class="section-body">
+    <ul>
+<li>AdBlock<span class="ver">4.0.1</span></li>
+<li>ApolloOne<span class="ver">4.5.1</span></li>
+<li>BBEdit<span class="ver">16.0</span></li>
+<li>Blackmagic Disk Speed Test<span class="ver">3.4.2</span></li>
+<li>Blackmagic RAW Speed Test<span class="ver">5.1</span></li>
+<li>Canva<span class="ver">1.122.1</span></li>
+<li>CapCut<span class="ver">8.6.0</span></li>
+<li>GarageBand<span class="ver">10.4.14</span></li>
+<li>Hidden Bar<span class="ver">1.8</span></li>
+<li>Hush<span class="ver">1.0.18</span></li>
+<li>iMovie<span class="ver">10.4.4</span></li>
+<li>Keynote<span class="ver">14.5</span></li>
+<li>LUTCalc<span class="ver">4.09</span></li>
+<li>Numbers<span class="ver">14.5</span></li>
+<li>Pages<span class="ver">14.5</span></li>
+<li>Profoto Control<span class="ver">1.3.4</span></li>
+<li>Raw Convertor<span class="ver">6.0.6</span></li>
+<li>Tab Space<span class="ver">3.14</span></li>
+<li>Tailscale<span class="ver">1.98.5</span></li>
+<li>uBlock Origin Lite<span class="ver">2026.516.1652</span></li>
+<li>WhatsApp<span class="ver">26.20.72</span></li>
+<li>Xcode<span class="ver">26.3</span></li>
+</ul>
+
+  </div>
+</details>
+<details >
+  <summary>
+    <span class="section-title">Launch Agents — User</span>
+    <span class="section-count">5</span>
+  </summary>
+  <div class="section-body">
+    <ul>
+<li>com.adobe.ccxprocess<span class="plist-file">com.adobe.ccxprocess.plist</span></li>
+<li>com.google.GoogleUpdater.wake<span class="plist-file">com.google.GoogleUpdater.wake.plist</span></li>
+<li>com.google.keystone.agent.plist</li>
+<li>com.google.keystone.xpcservice.plist</li>
+<li>com.local.auto-noindex<span class="plist-file">com.local.auto-noindex.plist</span></li>
+</ul>
+
+  </div>
+</details>
+<details >
+  <summary>
+    <span class="section-title">Launch Agents — System</span>
+    <span class="section-count">9</span>
+  </summary>
+  <div class="section-body">
+    <ul>
+<li>com.adobe.AdobeCreativeCloud<span class="plist-file">com.adobe.AdobeCreativeCloud.plist</span></li>
+<li>com.adobe.ccxprocess<span class="plist-file">com.adobe.ccxprocess.plist</span></li>
+<li>com.google.keystone.agent.plist</li>
+<li>com.google.keystone.xpcservice.plist</li>
+<li>com.wacom.DataStoreMgr<span class="plist-file">com.wacom.DataStoreMgr.plist</span></li>
+<li>com.wacom.IOManager<span class="plist-file">com.wacom.IOManager.plist</span></li>
+<li>com.wacom.wacomtablet<span class="plist-file">com.wacom.wacomtablet.plist</span></li>
+<li>us.zoom.updater.login.check<span class="plist-file">us.zoom.updater.login.check.plist</span></li>
+<li>us.zoom.updater<span class="plist-file">us.zoom.updater.plist</span></li>
+</ul>
+
+  </div>
+</details>
+<details >
+  <summary>
+    <span class="section-title">Launch Daemons — System</span>
+    <span class="section-count">8</span>
+  </summary>
+  <div class="section-body">
+    <ul>
+<li>com.adobe.acc.installer.v2<span class="plist-file">com.adobe.acc.installer.v2.plist</span></li>
+<li>com.google.GoogleUpdater.wake.system<span class="plist-file">com.google.GoogleUpdater.wake.system.plist</span></li>
+<li>com.google.keystone.daemon.plist</li>
+<li>gs-server<span class="plist-file">com.siber.gs-server.plist</span></li>
+<li>com.wacom.UpdateHelper<span class="plist-file">com.wacom.UpdateHelper.plist</span></li>
+<li>fr.madrau.switchresx.helper<span class="plist-file">fr.madrau.switchresx.helper.plist</span></li>
+<li>org.filezilla-project.filezilla-server.service<span class="plist-file">org.filezilla-project.filezilla-server.service.plist</span></li>
+<li>us.zoom.ZoomDaemon<span class="plist-file">us.zoom.ZoomDaemon.plist</span></li>
+</ul>
+
+  </div>
+</details>
+<details >
+  <summary>
+    <span class="section-title">Login Items</span>
+    <span class="section-count">0</span>
+  </summary>
+  <div class="section-body">
+    <p class="empty">No login items detected via sfltool.</p>
+  </div>
+</details>
+<div class="footer">Light Is Beauty Inc &middot; inventory_mac.py</div>
+</body>
+</html>
+
