@@ -190,19 +190,30 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler, WKNa
             "document.querySelectorAll('details').forEach(function(d){d.open=true})"
         ) { [weak self] _, _ in
             guard let self = self else { return }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                let info = NSPrintInfo.shared.copy() as! NSPrintInfo
-                info.topMargin = 36
-                info.bottomMargin = 36
-                info.leftMargin = 36
-                info.rightMargin = 36
-                let op = self.webView.printOperation(with: info)
-                op.showsPrintPanel = true
-                op.showsProgressPanel = true
-                op.run()
-                self.webView.evaluateJavaScript(
-                    "document.querySelectorAll('details').forEach(function(d){d.open=false})"
-                )
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                let panel = NSSavePanel()
+                panel.nameFieldStringValue = "software_inventory.pdf"
+                panel.allowedContentTypes = [.pdf]
+                panel.begin { response in
+                    guard response == .OK, let url = panel.url else {
+                        self.webView.evaluateJavaScript(
+                            "document.querySelectorAll('details').forEach(function(d){d.open=false})"
+                        )
+                        return
+                    }
+                    let config = WKPDFConfiguration()
+                    self.webView.createPDF(configuration: config) { result in
+                        DispatchQueue.main.async {
+                            if case .success(let data) = result {
+                                try? data.write(to: url)
+                                NSWorkspace.shared.open(url)
+                            }
+                            self.webView.evaluateJavaScript(
+                                "document.querySelectorAll('details').forEach(function(d){d.open=false})"
+                            )
+                        }
+                    }
+                }
             }
         }
     }

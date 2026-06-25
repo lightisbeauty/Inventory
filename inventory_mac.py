@@ -580,7 +580,7 @@ def build():
     # Login Items — omitted; all available methods require user authorization
 
     parts.append(
-        '<div class="footer">inventory v26062401 &middot; by: @lightisbeauty</div>\n'
+        '<div class="footer">inventory v26062402 &middot; by: @lightisbeauty</div>\n'
         '<script>\n'
         'var isNative=!!(window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.nativeExport);\n'
         'function exportPDF(){\n'
