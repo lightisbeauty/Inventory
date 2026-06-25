@@ -20,9 +20,6 @@ A macOS app that scans your system for all installed software and generates an i
 - Rust binaries (cargo)
 - Conda / Mamba environments
 
-**Python packages (pip)**
-- Package names and versions (with repo links and descriptions)
-
 **System & Background Software**
 - Launch Agents — User (`~/Library/LaunchAgents`)
 - Launch Agents — System (`/Library/LaunchAgents`)
