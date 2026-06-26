@@ -435,7 +435,10 @@ li::before{content:'\\2014';color:#444;flex-shrink:0}
 .diff-stat.removed{color:#db3eb1;background:rgba(219,62,177,0.08);border:0.5px solid rgba(219,62,177,0.3)}
 .diff-stat.updated{color:#f0c93e;background:rgba(240,201,62,0.08);border:0.5px solid rgba(240,201,62,0.3)}
 .diff-card{background:#2a2a2a;border:0.5px solid #444;border-radius:8px;margin-bottom:10px;overflow:hidden}
-.diff-card-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#41b6e6;padding:12px 16px;border-bottom:0.5px solid #333}
+.diff-card>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#41b6e6;padding:12px 16px}
+.diff-card>summary::-webkit-details-marker{display:none}
+.diff-card[open]>summary{border-bottom:0.5px solid #333}
+.diff-card-count{font-family:monospace;font-size:11px;color:#888;background:#1a1a1a;border:0.5px solid #333;border-radius:99px;padding:2px 8px;font-weight:400;letter-spacing:0;text-transform:none}
 .diff-card-body{padding:0 16px 14px}
 .diff-group-label{font-family:monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:10px 0 6px;border-bottom:0.5px solid #222}
 .diff-group-label.added{color:#3ef09e}
@@ -634,7 +637,7 @@ def build():
     parts.append(
         '</div>\n'
         '<div id="diff-view" class="diff-view"></div>\n'
-        '<div class="footer">inventory v26062603 &middot; by: @lightisbeauty</div>\n'
+        '<div class="footer">inventory v26062604 &middot; by: @lightisbeauty</div>\n'
         '<script>\n'
         'var isNative=!!(window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.nativeExport);\n'
         'function exportPDF(){\n'
@@ -702,7 +705,9 @@ def build():
         '  var prevDoc=parser.parseFromString(html,"text/html");\n'
         '  var prev=parseReport(prevDoc);\n'
         '  var curr=parseReport(document);\n'
-        '  var allSections=new Set(Object.keys(curr).concat(Object.keys(prev)));\n'
+        '  var allSections=Array.from(new Set(Object.keys(curr).concat(Object.keys(prev)))).sort(function(a,b){\n'
+        '    if(a==="System")return -1;if(b==="System")return 1;return a.localeCompare(b);\n'
+        '  });\n'
         '  var totalAdded=0,totalRemoved=0,totalUpdated=0;\n'
         '  var cards="";\n'
         '  allSections.forEach(function(sec){\n'
@@ -722,7 +727,8 @@ def build():
         '      removed.forEach(function(i){rows+=\'<div class="diff-row"><span class="name">\'+i.n+\'</span><span class="ver-old">\'+i.v+\'</span></div>\';});}\n'
         '    if(updated.length){rows+=\'<div class="diff-group-label updated">Updated (\'+updated.length+\')</div>\';\n'
         '      updated.forEach(function(i){rows+=\'<div class="diff-row"><span class="name">\'+i.n+\'</span><span class="ver-old">\'+i.ov+\'</span><span class="ver-arrow">→</span><span class="ver-updated">\'+i.nv+\'</span></div>\';});}\n'
-        '    cards+=\'<div class="diff-card"><div class="diff-card-title">\'+sec+\'</div><div class="diff-card-body">\'+rows+\'</div></div>\';\n'
+        '    var total=added.length+removed.length+updated.length;\n'
+        '    cards+=\'<details class="diff-card"><summary>\'+sec+\'<span class="diff-card-count">\'+total+\'</span></summary><div class="diff-card-body">\'+rows+\'</div></details>\';\n'
         '  });\n'
         '  var report=document.getElementById("report-sections");\n'
         '  var diff=document.getElementById("diff-view");\n'
