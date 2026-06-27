@@ -1,12 +1,20 @@
 # inventory
 
-A macOS app that scans your system for all installed software and generates an interactive report in a native window.
+A macOS app that scans your system for all installed software and generates an interactive report.
+
+All sections collapsed by default — click any row to expand it.
 
 ![inventory main view](_screenshots/main.jpg)
 
+Expand a section to see every installed item with version numbers.
+
 ![inventory section detail](_screenshots/detail.jpg)
 
+Save a snapshot, then use Compare to pick it from your snapshot library.
+
 ![inventory snapshot picker](_screenshots/snapshots.jpg)
+
+The diff shows exactly what changed between two scans — added, removed, and updated — across every section, including system and macOS changes.
 
 ![inventory compare view](_screenshots/compare.jpg)
 
