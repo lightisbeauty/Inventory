@@ -179,13 +179,75 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler, WKNa
         }
     }
 
+    var snapshotsDir: URL {
+        let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let dir = support.appendingPathComponent("inventory/snapshots")
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
+    func snapshotFilename() -> String {
+        let df = DateFormatter()
+        df.dateFormat = "yyMMdd_HHmm"
+        let d = df.string(from: Date())
+        let serial = shellOutput("ioreg -l | grep IOPlatformSerialNumber | awk -F'\"' '{print $4}'")
+        return "inventory_\(d)_\(serial).html"
+    }
+
+    func saveSnapshot(_ html: String) {
+        let url = snapshotsDir.appendingPathComponent(snapshotFilename())
+        try? html.write(to: url, atomically: true, encoding: .utf8)
+        DispatchQueue.main.async {
+            self.webView.evaluateJavaScript("showSnapshotSaved()")
+        }
+    }
+
+    func openSnapshots() {
+        let dir = snapshotsDir
+        let files = (try? FileManager.default.contentsOfDirectory(
+            at: dir, includingPropertiesForKeys: [.creationDateKey], options: []
+        ))?.filter { $0.pathExtension.lowercased() == "html" }
+          .sorted {
+            let a = (try? $0.resourceValues(forKeys: [.creationDateKey]).creationDate) ?? .distantPast
+            let b = (try? $1.resourceValues(forKeys: [.creationDateKey]).creationDate) ?? .distantPast
+            return a > b
+          } ?? []
+        let list = files.map { ["filename": $0.lastPathComponent] }
+        if let data = try? JSONSerialization.data(withJSONObject: list),
+           let json = String(data: data, encoding: .utf8) {
+            DispatchQueue.main.async {
+                self.webView.evaluateJavaScript("receiveSnapshotList(\(json))")
+            }
+        }
+    }
+
+    func deleteSnapshot(_ filename: String) {
+        try? FileManager.default.removeItem(at: snapshotsDir.appendingPathComponent(filename))
+        openSnapshots()
+    }
+
+    func loadSnapshot(_ filename: String) {
+        let url = snapshotsDir.appendingPathComponent(filename)
+        guard let html = try? String(contentsOf: url, encoding: .utf8) else { return }
+        let escaped = html
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "`", with: "\\`")
+        DispatchQueue.main.async {
+            self.webView.evaluateJavaScript("receiveCompareData(`\(escaped)`, `\(filename)`);")
+        }
+    }
+
     func userContentController(_ userContentController: WKUserContentController,
                                didReceive message: WKScriptMessage) {
         guard let body = message.body as? [String: Any],
               let action = body["action"] as? String else { return }
         if action == "pdf" { exportPDF() }
         else if action == "html", let html = body["html"] as? String { exportHTML(html) }
-        else if action == "compare" { openCompare() }
+        else if action == "saveSnapshot", let html = body["html"] as? String { saveSnapshot(html) }
+        else if action == "openSnapshots" { openSnapshots() }
+        else if action == "deleteSnapshot", let f = body["filename"] as? String { deleteSnapshot(f) }
+        else if action == "loadSnapshot", let f = body["filename"] as? String { loadSnapshot(f) }
+        else if action == "compareFromFile" { openCompare() }
     }
 
     func exportPDF() {

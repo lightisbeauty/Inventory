@@ -421,9 +421,19 @@ li::before{content:'\\2014';color:#444;flex-shrink:0}
 .page-header .sysinfo span{color:#41b6e6}
 .header-spacer{display:none}
 .footer{margin-top:2.5rem;font-size:10px;color:#7a9ab0;font-family:monospace;text-align:center}
-.export-bar{display:flex;gap:8px;flex-shrink:0;padding-top:2px}
-.export-btn{font-family:monospace;font-size:11px;color:#41b6e6;background:none;border:0.5px solid #444;border-radius:4px;padding:5px 12px;cursor:pointer;text-transform:uppercase;letter-spacing:0.06em}
+.export-bar{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;flex-shrink:0;padding-top:2px}
+.export-btn{font-family:monospace;font-size:11px;color:#41b6e6;background:none;border:0.5px solid #444;border-radius:4px;padding:5px 12px;cursor:pointer;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap}
 .export-btn:hover{border-color:#db3eb1}
+.snapshot-picker{display:none}
+.snapshot-list{margin-bottom:12px}
+.snapshot-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid #222;gap:16px}
+.snapshot-info{display:flex;flex-direction:column;gap:3px}
+.snapshot-date{font-family:monospace;font-size:12px;color:#ccc}
+.snapshot-serial{font-family:monospace;font-size:11px;color:#555}
+.snapshot-actions{display:flex;gap:8px;flex-shrink:0}
+.snapshot-delete{color:#db3eb1}
+.snapshot-footer{display:flex;align-items:center;padding-top:12px;border-top:0.5px solid #222}
+.snapshot-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;border:0.5px solid #444;border-radius:6px;padding:8px 20px;font-family:monospace;font-size:12px;color:#3ef09e;pointer-events:none;transition:opacity 0.3s;z-index:999}
 .diff-view{display:none}
 .diff-header{margin-bottom:1.5rem}
 .diff-header h2{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
@@ -535,8 +545,9 @@ def build():
     <div class="sysinfo"><span>{esc(sysinfo.get('model','Mac'))}</span>{(' &middot; ' + esc(sysinfo.get('display',''))) if sysinfo.get('display') else ''} &middot; <span>{esc(sysinfo.get('chip','—'))}</span> &middot; <span>{esc(sysinfo.get('memory','—'))}</span> &middot; {esc(sysinfo.get('macos_name','macOS'))} <span>{esc(sysinfo.get('macos_ver',''))}</span> &middot; SN: <span>{esc(sysinfo.get('serial','—'))}</span></div>
   </div>
   <div class="export-bar">
-    <button class="export-btn" onclick="openCompare()">Compare</button>
+    <button class="export-btn" onclick="saveSnapshot()">Save Snapshot</button>
     <button class="export-btn" onclick="saveHTML()">Export HTML</button>
+    <button class="export-btn" onclick="openCompare()">Compare</button>
     <button class="export-btn" onclick="exportPDF()">Export PDF</button>
   </div>
 </div>
@@ -637,7 +648,8 @@ def build():
     parts.append(
         '</div>\n'
         '<div id="diff-view" class="diff-view"></div>\n'
-        '<div class="footer">inventory v26062604 &middot; by: @lightisbeauty</div>\n'
+        '<div id="snapshot-picker" class="snapshot-picker diff-view"></div>\n'
+        '<div class="footer">inventory v26062605 &middot; by: @lightisbeauty</div>\n'
         '<script>\n'
         'var isNative=!!(window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.nativeExport);\n'
         'function exportPDF(){\n'
@@ -665,14 +677,69 @@ def build():
         '    URL.revokeObjectURL(a.href);\n'
         '  }\n'
         '}\n'
+        'function saveSnapshot(){\n'
+        '  if(!isNative)return;\n'
+        '  var el=document.querySelector(".export-bar");el.style.display="none";\n'
+        '  var html=document.documentElement.outerHTML;\n'
+        '  el.style.display="";\n'
+        '  window.webkit.messageHandlers.nativeExport.postMessage({action:"saveSnapshot",html:html});\n'
+        '}\n'
+        'function showSnapshotSaved(){\n'
+        '  var t=document.createElement("div");t.className="snapshot-toast";t.textContent="Snapshot saved";\n'
+        '  document.body.appendChild(t);\n'
+        '  setTimeout(function(){t.style.opacity="0";setTimeout(function(){t.remove();},300);},1800);\n'
+        '}\n'
         'function openCompare(){\n'
         '  if(isNative){\n'
-        '    window.webkit.messageHandlers.nativeExport.postMessage({action:"compare"});\n'
+        '    window.webkit.messageHandlers.nativeExport.postMessage({action:"openSnapshots"});\n'
         '  }else{\n'
         '    var inp=document.createElement("input");inp.type="file";inp.accept=".html";\n'
         '    inp.onchange=function(){var r=new FileReader();r.onload=function(e){receiveCompareData(e.target.result,""+inp.files[0].name);};r.readAsText(inp.files[0]);};\n'
         '    inp.click();\n'
         '  }\n'
+        '}\n'
+        'function parseSnapshotName(f){\n'
+        '  var base=f.replace(/\\.html$/i,""),p=base.split("_");\n'
+        '  if(p.length<4)return{display:f,serial:""};\n'
+        '  var ds=p[1],ts=p[2],serial=p.slice(3).join("_");\n'
+        '  var yr="20"+ds.slice(0,2),mo=parseInt(ds.slice(2,4))-1,dy=parseInt(ds.slice(4,6));\n'
+        '  var hr=parseInt(ts.slice(0,2)),mn=ts.slice(2,4);\n'
+        '  var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];\n'
+        '  var ampm=hr>=12?"PM":"AM",hr12=hr%12||12;\n'
+        '  return{display:months[mo]+" "+dy+", "+yr+" \\u00b7 "+hr12+":"+mn+" "+ampm,serial:serial};\n'
+        '}\n'
+        'function receiveSnapshotList(snapshots){\n'
+        '  document.getElementById("report-sections").style.display="none";\n'
+        '  var picker=document.getElementById("snapshot-picker");\n'
+        '  picker.style.display="block";\n'
+        '  var rows="";\n'
+        '  if(!snapshots.length){\n'
+        '    rows=\'<div class="no-changes">No snapshots yet — use Save Snapshot to create one.</div>\';\n'
+        '  }else{\n'
+        '    snapshots.forEach(function(s){\n'
+        '      var info=parseSnapshotName(s.filename);\n'
+        '      rows+=\'<div class="snapshot-row"><span class="snapshot-info"><span class="snapshot-date">\'+info.display+\'</span><span class="snapshot-serial">\'+info.serial+\'</span></span>\'\n'
+        '        +\'<span class="snapshot-actions"><button class="export-btn" onclick="loadSnapshot(\\\'\'+s.filename+\'\\\')">\'\n'
+        '        +\'Compare</button><button class="export-btn snapshot-delete" onclick="deleteSnapshot(\\\'\'+s.filename+\'\\\')">Delete</button></span></div>\';\n'
+        '    });\n'
+        '  }\n'
+        '  picker.innerHTML=\'<div class="diff-header"><h2>Snapshots</h2><div class="diff-meta">Select a snapshot to compare against the current scan</div></div>\'\n'
+        '    +\'<div class="snapshot-list">\'+rows+\'</div>\'\n'
+        '    +\'<div class="snapshot-footer"><button class="export-btn" onclick="compareFromFile()">Compare from file\\u2026</button>\'\n'
+        '    +\'<button class="export-btn" style="margin-left:auto" onclick="closeSnapshots()">Cancel</button></div>\';\n'
+        '}\n'
+        'function deleteSnapshot(filename){\n'
+        '  window.webkit.messageHandlers.nativeExport.postMessage({action:"deleteSnapshot",filename:filename});\n'
+        '}\n'
+        'function loadSnapshot(filename){\n'
+        '  window.webkit.messageHandlers.nativeExport.postMessage({action:"loadSnapshot",filename:filename});\n'
+        '}\n'
+        'function compareFromFile(){\n'
+        '  window.webkit.messageHandlers.nativeExport.postMessage({action:"compareFromFile"});\n'
+        '}\n'
+        'function closeSnapshots(){\n'
+        '  document.getElementById("snapshot-picker").style.display="none";\n'
+        '  document.getElementById("report-sections").style.display="";\n'
         '}\n'
         'function parseReport(doc){\n'
         '  var sections={};\n'
@@ -741,6 +808,7 @@ def build():
         'function closeCompare(){\n'
         '  document.getElementById("report-sections").style.display="";\n'
         '  document.getElementById("diff-view").style.display="none";\n'
+        '  document.getElementById("snapshot-picker").style.display="none";\n'
         '}\n'
         '</script>\n'
         '</body>\n</html>\n'

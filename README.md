@@ -46,13 +46,17 @@ Everything runs locally. No data is transmitted, collected, or shared.
 
 On first launch, inventory will offer to install Homebrew and `mas` if they aren't present — both are needed for the full Mac App Store inventory. All other package manager sections appear automatically if the tool is already installed on your system, and are hidden if not.
 
-## Export & Compare
+## Snapshots & Compare
 
-Reports can be exported as **PDF** (all sections expanded) or **HTML** (self-contained file, viewable in any browser).
+Click **Save Snapshot** to save the current report to your snapshot library (`~/Library/Application Support/inventory/snapshots/`). Snapshots are named automatically with the date, time, and serial number.
 
-**Keep your HTML exports.** The Compare feature diffs any two HTML reports — so if you save a snapshot today, you can load it later to see exactly what was added, removed, or updated between then and now. This is the primary way to track software changes over time: run inventory, export HTML, save it somewhere you'll find it.
+Click **Compare** to open the snapshot picker — a list of all saved snapshots sorted newest first. Select one to diff it against the current scan. inventory shows a section-by-section breakdown of what was added, removed, or updated, including macOS version and hardware changes. Each section card is collapsible; System always appears first.
 
-To compare: click **Compare** in the app, pick a previously saved HTML report, and inventory will show a section-by-section diff with added, removed, and updated items — including any macOS or system changes.
+To remove old snapshots, hit **Delete** next to any entry in the picker. If you need to compare against an HTML file from outside the snapshot library, use **Compare from file…** at the bottom of the picker.
+
+## Export
+
+Reports can also be exported as **PDF** (all sections expanded, via native save dialog) or **HTML** (self-contained file, viewable in any browser).
 
 ## Requirements
 
